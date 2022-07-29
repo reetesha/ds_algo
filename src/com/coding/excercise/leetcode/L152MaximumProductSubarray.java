@@ -22,38 +22,31 @@ public class L152MaximumProductSubarray {
 	*/
 	public int maxProduct1(int[] nums) {
 		
-		int maxSubArray = nums[0];
-		int currentSubArray = nums[0];
-		int premaxSubArray = nums[0];
+		if(nums.length==0) return 0;
+		
+		int max_so_far = nums[0];
+		int min_so_far = nums[0];
+		int result = max_so_far;
+		
 		for(int i=1;i<nums.length;i++) {
-			if (nums[i]<0) {
-				premaxSubArray = currentSubArray;
-			}
-			if(currentSubArray !=0)
-				currentSubArray *= nums[i];
-			else  			
-				currentSubArray =nums[i];
-			
-			maxSubArray = Math.max(maxSubArray, currentSubArray);
-			if((nums.length -1 )==i && currentSubArray<nums[i]) {
-				maxSubArray = nums[i];
-			}
-			if (maxSubArray<premaxSubArray) {
-				maxSubArray = premaxSubArray;
-			}
+			int curr = nums[i];
+			int temp_max= Math.max(curr, Math.max(min_so_far*curr, max_so_far*curr));
+			min_so_far= Math.min(curr, Math.min(min_so_far*curr, max_so_far*curr));
+			max_so_far = temp_max;
+			result = Math.max(result, max_so_far);
 		}
-	    return maxSubArray;
+	    return result;
 	 
 	    }
 	 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//int nums[] = {2,3,-2,4}; //6
+		int nums[] = {2,3,-2,4}; //6
 		//int nums[] = {-2,3,-4};//24
 		//int nums[] = {-2,0,-1};//0
 		//int nums[] = {0,2};//2
 		//int nums[] = {3,-1,4};//4
-		int nums[] = {2,-5,-2,-4,3};//24
+		//int nums[] = {2,-5,-2,-4,3};//24
 		L152MaximumProductSubarray l = new L152MaximumProductSubarray();
 		System.out.print(" "+l.maxProduct1(nums));
 		
